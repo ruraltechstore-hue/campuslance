@@ -78,12 +78,14 @@ export function LeaveReviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>{triggerLabel}</Button>
-      </DialogTrigger>
+      {!hideTrigger && (
+        <DialogTrigger asChild>
+          <Button>{triggerLabel}</Button>
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Leave feedback</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <form onSubmit={submit} className="space-y-4">
           <div>
