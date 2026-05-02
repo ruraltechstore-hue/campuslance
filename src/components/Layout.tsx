@@ -11,13 +11,16 @@ export function Layout({ children }: { children: ReactNode }) {
     role === "student"
       ? [
           { to: "/dashboard", label: "Browse projects" },
-          { to: "/applications", label: "My applications" },
-          { to: "/portfolio", label: "My portfolio" },
+          { to: "/applications", label: "Applications" },
+          { to: "/invites", label: "Invites" },
+          { to: "/completed-work", label: "Completed work" },
+          { to: "/portfolio", label: "Portfolio" },
         ]
       : role === "business"
       ? [
           { to: "/dashboard", label: "My projects" },
           { to: "/students", label: "Browse talent" },
+          { to: "/worked-students", label: "Worked with" },
           { to: "/projects/new", label: "Post project" },
         ]
       : [];

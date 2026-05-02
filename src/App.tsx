@@ -15,6 +15,9 @@ import Applications from "./pages/Applications";
 import Portfolio from "./pages/Portfolio";
 import StudentBrowse from "./pages/StudentBrowse";
 import Profile from "./pages/Profile";
+import WorkedStudents from "./pages/WorkedStudents";
+import MyInvites from "./pages/MyInvites";
+import CompletedWork from "./pages/CompletedWork";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +40,9 @@ const App = () => (
             <Route path="/portfolio" element={<ProtectedRoute requiredRole="student"><Portfolio /></ProtectedRoute>} />
             <Route path="/students" element={<ProtectedRoute><StudentBrowse /></ProtectedRoute>} />
             <Route path="/students/:id" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
+            <Route path="/worked-students" element={<ProtectedRoute requiredRole="business"><WorkedStudents /></ProtectedRoute>} />
+            <Route path="/invites" element={<ProtectedRoute requiredRole="student"><MyInvites /></ProtectedRoute>} />
+            <Route path="/completed-work" element={<ProtectedRoute requiredRole="student"><CompletedWork /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/index" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
