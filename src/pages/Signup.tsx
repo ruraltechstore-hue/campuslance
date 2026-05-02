@@ -52,8 +52,9 @@ const Signup = () => {
       toast.error(error.message);
       return;
     }
-    toast.success("Welcome to CampusLance!");
-    navigate("/dashboard");
+    sessionStorage.setItem("pending_otp_email", email);
+    toast.success("We sent a 6-digit code to your email.");
+    navigate("/verify-otp", { state: { email } });
   }
 
   return (
