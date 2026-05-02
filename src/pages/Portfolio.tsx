@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { ExternalLink, Plus, Trash2, ArrowLeft } from "lucide-react";
+import { ReviewsList } from "@/components/ReviewsList";
 
 type StudentProject = {
   id: string;
@@ -257,6 +258,12 @@ const Portfolio = () => {
                 </div>
               </Card>
             ))}
+          </div>
+        )}
+
+        {ownerId && (
+          <div className="mt-10">
+            <ReviewsList userId={ownerId} />
           </div>
         )}
       </div>
