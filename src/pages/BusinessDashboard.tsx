@@ -6,7 +6,7 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Users } from "lucide-react";
+import { Plus, Users, Users2 } from "lucide-react";
 
 type Project = {
   id: string;
@@ -56,11 +56,18 @@ const BusinessDashboard = () => {
             <h1 className="font-display text-3xl font-bold mb-2">My projects</h1>
             <p className="text-muted-foreground">Manage your posts and review applicants.</p>
           </div>
-          <Button asChild>
-            <Link to="/projects/new">
-              <Plus className="h-4 w-4 mr-1" /> New project
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link to="/worked-students">
+                <Users2 className="h-4 w-4 mr-1" /> Worked students
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link to="/projects/new">
+                <Plus className="h-4 w-4 mr-1" /> New project
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {loading ? (

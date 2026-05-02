@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { ExternalLink, Plus, Trash2, ArrowLeft } from "lucide-react";
 import { ReviewsList } from "@/components/ReviewsList";
+import { InviteStudentDialog } from "@/components/InviteStudentDialog";
 
 type StudentProject = {
   id: string;
@@ -151,6 +152,12 @@ const Portfolio = () => {
               </div>
             ) : null}
           </div>
+          {!isOwner && role === "business" && ownerId && (
+            <InviteStudentDialog
+              studentId={ownerId}
+              studentName={profile?.name || undefined}
+            />
+          )}
           {isOwner && role === "student" && (
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
