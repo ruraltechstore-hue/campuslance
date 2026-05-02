@@ -8,6 +8,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import VerifyOtp from "./pages/VerifyOtp";
 import Dashboard from "./pages/Dashboard";
 import NewProject from "./pages/NewProject";
 import ProjectDetail from "./pages/ProjectDetail";
