@@ -19,6 +19,10 @@ interface Props {
   revieweeId: string;
   onSubmitted?: () => void;
   triggerLabel?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideTrigger?: boolean;
+  title?: string;
 }
 
 export function LeaveReviewDialog({
@@ -27,8 +31,17 @@ export function LeaveReviewDialog({
   revieweeId,
   onSubmitted,
   triggerLabel = "Leave feedback",
+  open: controlledOpen,
+  onOpenChange,
+  hideTrigger = false,
+  title = "Leave feedback",
 }: Props) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = controlledOpen ?? internalOpen;
+  const setOpen = (v: boolean) => {
+    if (onOpenChange) onOpenChange(v);
+    else setInternalOpen(v);
+  };
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
