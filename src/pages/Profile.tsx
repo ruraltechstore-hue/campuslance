@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
+import { ReviewsList } from "@/components/ReviewsList";
 
 const Profile = () => {
   const { user, role } = useAuth();
@@ -127,6 +128,12 @@ const Profile = () => {
             </Button>
           </form>
         </Card>
+
+        {user && (
+          <div className="mt-10">
+            <ReviewsList userId={user.id} />
+          </div>
+        )}
       </div>
     </Layout>
   );

@@ -22,6 +22,7 @@ export type Database = {
           created_at: string
           deadline: string | null
           description: string
+          documentation_url: string | null
           id: string
           required_skills: string[] | null
           status: Database["public"]["Enums"]["project_status"]
@@ -35,6 +36,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           description: string
+          documentation_url?: string | null
           id?: string
           required_skills?: string[] | null
           status?: Database["public"]["Enums"]["project_status"]
@@ -48,6 +50,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           description?: string
+          documentation_url?: string | null
           id?: string
           required_skills?: string[] | null
           status?: Database["public"]["Enums"]["project_status"]
@@ -132,6 +135,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "proposals_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "business_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          project_id: string
+          rating: number
+          reviewee_id: string
+          reviewer_id: string
+          updated_at: string
+        }
+        Insert: {
+          comment?: string
+          created_at?: string
+          id?: string
+          project_id: string
+          rating: number
+          reviewee_id: string
+          reviewer_id: string
+          updated_at?: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          project_id?: string
+          rating?: number
+          reviewee_id?: string
+          reviewer_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "business_projects"
