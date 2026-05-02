@@ -71,9 +71,15 @@ export function SubmissionsPanel({
   }, [projectId]);
 
   const latest = submissions[0];
+  // Allow submission for the assigned student whenever the project is active
+  // (accepted/in_progress) or a revision was requested. Block only on submitted/completed.
+  const activeForSubmission =
+    projectStatus === "in_progress" ||
+    projectStatus === "accepted" ||
+    projectStatus === "open";
   const canSubmit =
     isAssignedStudent &&
-    (projectStatus === "in_progress" ||
+    (activeForSubmission ||
       (latest && latest.status === "revision_requested"));
   const isResubmit = !!latest && latest.status === "revision_requested";
 
