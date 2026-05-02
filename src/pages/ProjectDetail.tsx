@@ -379,6 +379,18 @@ const ProjectDetail = () => {
           )}
         </Card>
 
+        {/* Work submissions (visible to assigned student or project owner) */}
+        {(isOwner || isAcceptedStudent) && (
+          <SubmissionsPanel
+            projectId={project.id}
+            projectStatus={project.status}
+            isAssignedStudent={isAcceptedStudent}
+            isOwner={isOwner}
+            studentId={acceptedProposal?.student_id}
+            onChanged={load}
+          />
+        )}
+
         {/* Project reviews */}
         {projectReviews.length > 0 && (
           <Card className="p-6 mb-6">
