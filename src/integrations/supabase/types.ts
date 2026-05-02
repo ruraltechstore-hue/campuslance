@@ -14,16 +14,208 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      business_projects: {
+        Row: {
+          budget: number
+          business_id: string
+          category: string | null
+          created_at: string
+          deadline: string | null
+          description: string
+          id: string
+          required_skills: string[] | null
+          status: Database["public"]["Enums"]["project_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          budget: number
+          business_id: string
+          category?: string | null
+          created_at?: string
+          deadline?: string | null
+          description: string
+          id?: string
+          required_skills?: string[] | null
+          status?: Database["public"]["Enums"]["project_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          budget?: number
+          business_id?: string
+          category?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string
+          id?: string
+          required_skills?: string[] | null
+          status?: Database["public"]["Enums"]["project_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          company_description: string | null
+          company_name: string | null
+          created_at: string
+          email: string
+          id: string
+          industry: string | null
+          name: string | null
+          portfolio_links: string[] | null
+          skills: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          company_description?: string | null
+          company_name?: string | null
+          created_at?: string
+          email: string
+          id: string
+          industry?: string | null
+          name?: string | null
+          portfolio_links?: string[] | null
+          skills?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          company_description?: string | null
+          company_name?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          industry?: string | null
+          name?: string | null
+          portfolio_links?: string[] | null
+          skills?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      proposals: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          project_id: string
+          status: Database["public"]["Enums"]["proposal_status"]
+          student_id: string
+          timeline: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          project_id: string
+          status?: Database["public"]["Enums"]["proposal_status"]
+          student_id: string
+          timeline: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          project_id?: string
+          status?: Database["public"]["Enums"]["proposal_status"]
+          student_id?: string
+          timeline?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposals_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "business_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_projects: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          project_url: string | null
+          skills: string[] | null
+          student_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          project_url?: string | null
+          skills?: string[] | null
+          student_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          project_url?: string | null
+          skills?: string[] | null
+          student_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "business"
+      project_status: "open" | "in_progress" | "completed"
+      proposal_status: "pending" | "accepted" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +342,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "business"],
+      project_status: ["open", "in_progress", "completed"],
+      proposal_status: ["pending", "accepted", "rejected"],
+    },
   },
 } as const
