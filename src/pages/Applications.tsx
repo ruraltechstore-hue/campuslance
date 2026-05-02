@@ -70,33 +70,45 @@ const Applications = () => {
         ) : (
           <div className="space-y-3">
             {items.map((p) => (
-              <Card key={p.id} className="p-5">
-                <div className="flex justify-between items-start gap-3 mb-2">
-                  <Link
-                    to={`/projects/${p.project_id}`}
-                    className="font-display font-semibold hover:underline"
-                  >
-                    {p.project?.title || "Project"}
-                  </Link>
-                  <Badge
-                    className="capitalize"
-                    variant={
-                      p.status === "accepted"
-                        ? "default"
-                        : p.status === "rejected"
-                        ? "destructive"
-                        : "secondary"
-                    }
-                  >
-                    {p.status}
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{p.message}</p>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Timeline: {p.timeline}</span>
-                  <span>Applied {format(new Date(p.created_at), "MMM d, yyyy")}</span>
-                </div>
-              </Card>
+              <Link
+                key={p.id}
+                to={`/projects/${p.project_id}`}
+                className="block group"
+              >
+                <Card
+                  className={`p-5 transition-colors cursor-pointer hover:border-foreground/30 ${
+                    p.status === "accepted"
+                      ? "border-accent/60 bg-accent/5"
+                      : ""
+                  }`}
+                >
+                  <div className="flex justify-between items-start gap-3 mb-2">
+                    <div className="font-display font-semibold group-hover:underline">
+                      {p.project?.title || "Project"}
+                    </div>
+                    <Badge
+                      className="capitalize"
+                      variant={
+                        p.status === "accepted"
+                          ? "default"
+                          : p.status === "rejected"
+                          ? "destructive"
+                          : "secondary"
+                      }
+                    >
+                      {p.status}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{p.message}</p>
+                  <div className="flex justify-between items-center text-xs text-muted-foreground">
+                    <span>Timeline: {p.timeline}</span>
+                    <span>Applied {format(new Date(p.created_at), "MMM d, yyyy")}</span>
+                  </div>
+                  <div className="mt-3 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                    View details →
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
         )}
