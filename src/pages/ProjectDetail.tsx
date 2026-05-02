@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { LeaveReviewDialog } from "@/components/LeaveReviewDialog";
 import { StarRating } from "@/components/StarRating";
+import { SubmissionsPanel } from "@/components/SubmissionsPanel";
 import { toast } from "sonner";
 import { DollarSign, Calendar, Building2, ArrowLeft, FileText, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
