@@ -263,6 +263,50 @@ export type Database = {
         }
         Relationships: []
       }
+      submissions: {
+        Row: {
+          created_at: string
+          file_url: string | null
+          id: string
+          message: string
+          project_id: string
+          project_url: string | null
+          status: Database["public"]["Enums"]["submission_status"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          message?: string
+          project_id: string
+          project_url?: string | null
+          status?: Database["public"]["Enums"]["submission_status"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          message?: string
+          project_id?: string
+          project_url?: string | null
+          status?: Database["public"]["Enums"]["submission_status"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "business_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -296,12 +340,21 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_assigned_student: {
+        Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_project_business: {
+        Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "student" | "business"
       invite_status: "pending" | "accepted" | "rejected"
-      project_status: "open" | "in_progress" | "completed"
+      project_status: "open" | "in_progress" | "submitted" | "completed"
       proposal_status: "pending" | "accepted" | "rejected"
+      submission_status: "submitted" | "revision_requested" | "approved"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -431,8 +484,9 @@ export const Constants = {
     Enums: {
       app_role: ["student", "business"],
       invite_status: ["pending", "accepted", "rejected"],
-      project_status: ["open", "in_progress", "completed"],
+      project_status: ["open", "in_progress", "submitted", "completed"],
       proposal_status: ["pending", "accepted", "rejected"],
+      submission_status: ["submitted", "revision_requested", "approved"],
     },
   },
 } as const
