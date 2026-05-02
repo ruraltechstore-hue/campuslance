@@ -59,6 +59,47 @@ export type Database = {
         }
         Relationships: []
       }
+      invites: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          message: string
+          project_id: string
+          status: Database["public"]["Enums"]["invite_status"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          message?: string
+          project_id: string
+          status?: Database["public"]["Enums"]["invite_status"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          project_id?: string
+          status?: Database["public"]["Enums"]["invite_status"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invites_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "business_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           bio: string | null
@@ -258,6 +299,7 @@ export type Database = {
     }
     Enums: {
       app_role: "student" | "business"
+      invite_status: "pending" | "accepted" | "rejected"
       project_status: "open" | "in_progress" | "completed"
       proposal_status: "pending" | "accepted" | "rejected"
     }
@@ -388,6 +430,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["student", "business"],
+      invite_status: ["pending", "accepted", "rejected"],
       project_status: ["open", "in_progress", "completed"],
       proposal_status: ["pending", "accepted", "rejected"],
     },
