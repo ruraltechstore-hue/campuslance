@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { LeaveReviewDialog } from "@/components/LeaveReviewDialog";
 import { StarRating } from "@/components/StarRating";
+import { SubmissionsPanel } from "@/components/SubmissionsPanel";
 import { toast } from "sonner";
 import { DollarSign, Calendar, Building2, ArrowLeft, FileText, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
@@ -377,6 +378,18 @@ const ProjectDetail = () => {
             </div>
           )}
         </Card>
+
+        {/* Work submissions (visible to assigned student or project owner) */}
+        {(isOwner || isAcceptedStudent) && (
+          <SubmissionsPanel
+            projectId={project.id}
+            projectStatus={project.status}
+            isAssignedStudent={isAcceptedStudent}
+            isOwner={isOwner}
+            studentId={acceptedProposal?.student_id}
+            onChanged={load}
+          />
+        )}
 
         {/* Project reviews */}
         {projectReviews.length > 0 && (
