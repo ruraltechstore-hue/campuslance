@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { pickPrimaryRole, type AppRole } from "@/lib/appRole";
 
-export type AppRole = "student" | "business";
+export type { AppRole };
 
 interface AuthContextValue {
   user: User | null;
@@ -21,11 +22,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
-        // defer role fetch to avoid deadlocks
         setTimeout(() => fetchRole(s.user.id), 0);
       } else {
         setRole(null);
@@ -43,12 +45,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   async function fetchRole(userId: string) {
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId)
-      .maybeSingle();
-    setRole((data?.role as AppRole) ?? null);
+    const { data } = await supabase.from("user_roles").select("role").eq("user_id", userId);
+    setRole(pickPrimaryRole(data ?? []));
   }
 
   async function signOut() {

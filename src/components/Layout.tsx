@@ -8,22 +8,28 @@ export function Layout({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
   const navLinks =
-    role === "student"
+    role === "admin"
       ? [
-          { to: "/dashboard", label: "Browse projects" },
-          { to: "/applications", label: "Applications" },
-          { to: "/invites", label: "Invites" },
-          { to: "/completed-work", label: "Completed work" },
-          { to: "/portfolio", label: "Portfolio" },
+          { to: "/dashboard", label: "Overview" },
+          { to: "/admin/verifications", label: "Verifications" },
         ]
-      : role === "business"
-      ? [
-          { to: "/dashboard", label: "My projects" },
-          { to: "/students", label: "Browse talent" },
-          { to: "/worked-students", label: "Worked with" },
-          { to: "/projects/new", label: "Post project" },
-        ]
-      : [];
+      : role === "student"
+        ? [
+            { to: "/dashboard", label: "Browse projects" },
+            { to: "/applications", label: "Applications" },
+            { to: "/invites", label: "Invites" },
+            { to: "/completed-work", label: "Completed work" },
+            { to: "/portfolio", label: "Portfolio" },
+          ]
+        : role === "business"
+          ? [
+              { to: "/dashboard", label: "My projects" },
+              { to: "/business/verification", label: "Verification" },
+              { to: "/students", label: "Browse talent" },
+              { to: "/worked-students", label: "Worked with" },
+              { to: "/projects/new", label: "Post project" },
+            ]
+          : [];
 
   return (
     <div className="min-h-screen bg-background">

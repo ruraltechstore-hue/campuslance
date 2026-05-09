@@ -2,10 +2,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { Layout } from "@/components/Layout";
 import StudentDashboard from "./StudentDashboard";
 import BusinessDashboard from "./BusinessDashboard";
+import AdminDashboard from "./AdminDashboard";
 
 const Dashboard = () => {
   const { role, loading } = useAuth();
   if (loading) return null;
+  if (role === "admin") return <AdminDashboard />;
   if (role === "student") return <StudentDashboard />;
   if (role === "business") return <BusinessDashboard />;
   return (

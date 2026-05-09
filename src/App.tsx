@@ -8,7 +8,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import VerifyOtp from "./pages/VerifyOtp";
+import CheckEmail from "./pages/CheckEmail";
 import Dashboard from "./pages/Dashboard";
 import NewProject from "./pages/NewProject";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -20,6 +20,10 @@ import WorkedStudents from "./pages/WorkedStudents";
 import MyInvites from "./pages/MyInvites";
 import CompletedWork from "./pages/CompletedWork";
 import NotFound from "./pages/NotFound";
+import BusinessVerification from "./pages/BusinessVerification";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminVerifications from "./pages/AdminVerifications";
+import AdminVerificationDetail from "./pages/AdminVerificationDetail";
 
 const queryClient = new QueryClient();
 
@@ -34,9 +38,49 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/check-email" element={<CheckEmail />} />
+            <Route path="/verify-otp" element={<Navigate to="/check-email" replace />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/projects/new" element={<ProtectedRoute requiredRole="business"><NewProject /></ProtectedRoute>} />
+            <Route
+              path="/business/verification"
+              element={
+                <ProtectedRoute requiredRole="business">
+                  <BusinessVerification />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/new"
+              element={
+                <ProtectedRoute requiredRole="business" requireVerifiedBusiness>
+                  <NewProject />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/verifications"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminVerifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/verifications/:id"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminVerificationDetail />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/projects/:id" element={<ProtectedRoute><ProjectDetail /></ProtectedRoute>} />
             <Route path="/applications" element={<ProtectedRoute requiredRole="student"><Applications /></ProtectedRoute>} />
             <Route path="/portfolio" element={<ProtectedRoute requiredRole="student"><Portfolio /></ProtectedRoute>} />

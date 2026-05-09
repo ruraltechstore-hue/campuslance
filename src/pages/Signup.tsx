@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Layout } from "@/components/Layout";
 import { toast } from "sonner";
 import { GraduationCap, Briefcase } from "lucide-react";
+import { PENDING_EMAIL_VERIFICATION_KEY } from "@/pages/CheckEmail";
 
 const schema = z.object({
   email: z.string().trim().email("Invalid email").max(255),
@@ -35,7 +36,8 @@ const Signup = () => {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    // Admin cannot self-register; only student/business (see handle_new_user migration).
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -52,9 +54,15 @@ const Signup = () => {
       toast.error(error.message);
       return;
     }
-    sessionStorage.setItem("pending_otp_email", email);
-    toast.success("We sent a 6-digit code to your email.");
-    navigate("/verify-otp", { state: { email } });
+    const confirmed = Boolean(data.user?.email_confirmed_at);
+    if (data.session && confirmed) {
+      toast.success("Account created! Welcome to CampusLance.");
+      navigate("/dashboard", { replace: true });
+      return;
+    }
+    sessionStorage.setItem(PENDING_EMAIL_VERIFICATION_KEY, email);
+    toast.success("Check your email to finish signing up.");
+    navigate("/check-email", { state: { email } });
   }
 
   return (

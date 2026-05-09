@@ -1,1 +1,7 @@
-project_id = "ncnstfpairclbrovrpru"
+project_id = "xkbybmhcrjbdwnrpynft"
+
+# Confirm signup email uses a magic link ({{ .ConfirmationURL }} in templates/confirmation.html).
+# Hosted: copy this HTML into Dashboard → Authentication → Email templates → Confirm signup.
+[auth.email.template.confirmation]
+subject = "Confirm your CampusLance email"
+content_path = "./templates/confirmation.html"

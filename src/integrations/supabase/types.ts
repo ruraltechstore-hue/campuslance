@@ -59,6 +59,86 @@ export type Database = {
         }
         Relationships: []
       }
+      business_verification_documents: {
+        Row: {
+          created_at: string
+          doc_type: Database["public"]["Enums"]["business_verification_doc_type"]
+          file_name: string
+          id: string
+          storage_path: string
+          verification_id: string
+        }
+        Insert: {
+          created_at?: string
+          doc_type: Database["public"]["Enums"]["business_verification_doc_type"]
+          file_name: string
+          id?: string
+          storage_path: string
+          verification_id: string
+        }
+        Update: {
+          created_at?: string
+          doc_type?: Database["public"]["Enums"]["business_verification_doc_type"]
+          file_name?: string
+          id?: string
+          storage_path?: string
+          verification_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_verification_documents_verification_id_fkey"
+            columns: ["verification_id"]
+            isOneToOne: false
+            referencedRelation: "business_verifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_verifications: {
+        Row: {
+          company_type: Database["public"]["Enums"]["business_company_type"]
+          created_at: string
+          id: string
+          registration_number: string | null
+          rejection_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["business_verification_status"]
+          submitted_at: string | null
+          tax_id_number: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_type?: Database["public"]["Enums"]["business_company_type"]
+          created_at?: string
+          id?: string
+          registration_number?: string | null
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["business_verification_status"]
+          submitted_at?: string | null
+          tax_id_number?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_type?: Database["public"]["Enums"]["business_company_type"]
+          created_at?: string
+          id?: string
+          registration_number?: string | null
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["business_verification_status"]
+          submitted_at?: string | null
+          tax_id_number?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       invites: {
         Row: {
           business_id: string
@@ -333,6 +413,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      business_verification_is_approved: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -350,7 +434,16 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "student" | "business"
+      app_role: "student" | "business" | "admin"
+      business_company_type: "private_company" | "public_company"
+      business_verification_doc_type:
+        | "registration_certificate"
+        | "tax_registration"
+        | "proof_of_address"
+        | "incorporation"
+        | "directors_info"
+        | "audited_financial"
+      business_verification_status: "draft" | "pending_review" | "approved" | "rejected"
       invite_status: "pending" | "accepted" | "rejected"
       project_status: "open" | "in_progress" | "submitted" | "completed"
       proposal_status: "pending" | "accepted" | "rejected"
@@ -482,7 +575,17 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["student", "business"],
+      app_role: ["student", "business", "admin"],
+      business_company_type: ["private_company", "public_company"],
+      business_verification_doc_type: [
+        "registration_certificate",
+        "tax_registration",
+        "proof_of_address",
+        "incorporation",
+        "directors_info",
+        "audited_financial",
+      ],
+      business_verification_status: ["draft", "pending_review", "approved", "rejected"],
       invite_status: ["pending", "accepted", "rejected"],
       project_status: ["open", "in_progress", "submitted", "completed"],
       proposal_status: ["pending", "accepted", "rejected"],

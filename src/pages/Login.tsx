@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Layout } from "@/components/Layout";
 import { toast } from "sonner";
+import { PENDING_EMAIL_VERIFICATION_KEY } from "@/pages/CheckEmail";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,17 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
+      const unconfirmed =
+        /email not confirmed|email address not confirmed|confirm your email/i.test(error.message) ||
+        (error as { code?: string }).code === "email_not_confirmed";
+      if (unconfirmed) {
+        sessionStorage.setItem(PENDING_EMAIL_VERIFICATION_KEY, email);
+        toast.info("Verify your email", {
+          description: "We sent a confirmation link. Check your inbox and tap the link to finish signing in.",
+        });
+        navigate("/check-email", { state: { email } });
+        return;
+      }
       toast.error(error.message);
       return;
     }

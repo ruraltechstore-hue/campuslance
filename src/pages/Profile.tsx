@@ -50,7 +50,7 @@ const Profile = () => {
     e.preventDefault();
     setSaving(true);
     const updates =
-      role === "student"
+      role === "student" || role === "admin"
         ? {
             name: name.trim() || null,
             bio: bio.trim() || null,
@@ -83,12 +83,14 @@ const Profile = () => {
         <p className="text-muted-foreground mb-8">
           {role === "student"
             ? "Help businesses understand what you bring to the table."
-            : "Tell students about your company."}
+            : role === "admin"
+              ? "Your admin account profile."
+              : "Tell students about your company."}
         </p>
 
         <Card className="p-6">
           <form onSubmit={save} className="space-y-4">
-            {role === "student" ? (
+            {role === "student" || role === "admin" ? (
               <>
                 <div>
                   <Label htmlFor="name">Full name</Label>
