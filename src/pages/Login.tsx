@@ -39,7 +39,7 @@ const Login = () => {
   }
 
   return (
-    <Layout>
+    <Layout siteFooter>
       <div className="container-page py-16 max-w-md">
         <h1 className="font-display text-3xl font-bold mb-2">Welcome back</h1>
         <p className="text-muted-foreground mb-8">Log in to continue.</p>

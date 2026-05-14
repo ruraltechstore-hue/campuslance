@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Search, DollarSign, Calendar } from "lucide-react";
 import { format } from "date-fns";
+import { toast } from "sonner";
+import { SAMPLE_SHOWCASE_PROJECTS } from "@/content/sampleShowcaseProjects";
 
 type Project = {
   id: string;
@@ -23,20 +25,33 @@ type Project = {
 
 type Profile = { id: string; company_name: string | null; industry: string | null };
 
+const EXAMPLE_BRIEFS = SAMPLE_SHOWCASE_PROJECTS.slice(0, 3);
+
 const StudentDashboard = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [profiles, setProfiles] = useState<Record<string, Profile>>({});
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
+      setFetchError(null);
+      const { data, error } = await supabase
         .from("business_projects")
         .select("*")
         .eq("status", "open")
         .order("created_at", { ascending: false });
-      setProjects(data ?? []);
+
+      if (error) {
+        setFetchError(error.message);
+        toast.error("Could not load projects", { description: error.message });
+        setProjects([]);
+        setLoading(false);
+        return;
+      }
+
+      setProjects((data ?? []) as Project[]);
       const ids = [...new Set((data ?? []).map((p) => p.business_id))];
       if (ids.length) {
         const { data: profs } = await supabase
@@ -62,6 +77,9 @@ const StudentDashboard = () => {
     );
   });
 
+  const showExamplesStrip = !loading && !fetchError && projects.length === 0;
+  const emptyFromSearch = !loading && !fetchError && projects.length > 0 && filtered.length === 0;
+
   return (
     <Layout>
       <div className="container-page py-10">
@@ -82,10 +100,53 @@ const StudentDashboard = () => {
 
         {loading ? (
           <div className="text-muted-foreground">Loading…</div>
-        ) : filtered.length === 0 ? (
-          <Card className="p-12 text-center">
-            <p className="text-muted-foreground">No open projects yet. Check back soon.</p>
+        ) : fetchError ? (
+          <Card className="p-8 border-destructive/30 bg-destructive/5">
+            <p className="font-medium text-foreground mb-1">Something went wrong</p>
+            <p className="text-sm text-muted-foreground">{fetchError}</p>
           </Card>
+        ) : emptyFromSearch ? (
+          <Card className="p-12 text-center">
+            <p className="text-muted-foreground">No matching projects. Try a different search.</p>
+          </Card>
+        ) : filtered.length === 0 ? (
+          <div className="space-y-10">
+            <Card className="p-12 text-center">
+              <p className="text-muted-foreground">No open projects yet. Check back soon.</p>
+            </Card>
+
+            {showExamplesStrip && (
+              <div>
+                <h2 className="font-display text-lg font-semibold mb-1">Example briefs</h2>
+                <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
+                  These sample briefs are for inspiration only—not live listings on CampusLance. Open one to see the
+                  kind of scope businesses often post.
+                </p>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {EXAMPLE_BRIEFS.map((ex) => (
+                    <Link key={ex.slug} to={`/projects/showcase/${ex.slug}`} className="group block rounded-lg">
+                      <Card className="h-full overflow-hidden transition-colors group-hover:border-accent/40 group-hover:shadow-md">
+                        <div className="aspect-[16/10] overflow-hidden bg-muted">
+                          <img
+                            src={ex.imageSrc}
+                            alt={ex.imageAlt}
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h3 className="font-display font-semibold text-sm group-hover:text-accent transition-colors mb-1">
+                            {ex.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground line-clamp-2">{ex.summary}</p>
+                        </div>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         ) : (
           <div className="grid gap-4">
             {filtered.map((p) => (

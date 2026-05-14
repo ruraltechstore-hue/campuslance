@@ -24,6 +24,14 @@ import BusinessVerification from "./pages/BusinessVerification";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminVerifications from "./pages/AdminVerifications";
 import AdminVerificationDetail from "./pages/AdminVerificationDetail";
+import About from "./pages/About";
+import MarketingProjects from "./pages/MarketingProjects";
+import Contact from "./pages/Contact";
+import Legal from "./pages/Legal";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import CookiesPolicy from "./pages/CookiesPolicy";
+import SampleProjectShowcase from "./pages/SampleProjectShowcase";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +48,14 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/check-email" element={<CheckEmail />} />
             <Route path="/verify-otp" element={<Navigate to="/check-email" replace />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<MarketingProjects />} />
+            <Route path="/projects/showcase/:slug" element={<SampleProjectShowcase />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/cookies" element={<CookiesPolicy />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route
               path="/business/verification"

@@ -1,11 +1,40 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { ReactNode } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SiteFooter } from "@/components/SiteFooter";
+import { AppSidebar } from "@/components/AppSidebar";
+import { Menu } from "lucide-react";
+import { ReactNode, useState } from "react";
 
-export function Layout({ children }: { children: ReactNode }) {
+const publicNavClass = ({ isActive }: { isActive: boolean }) =>
+  `px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+    isActive ? "text-foreground bg-secondary" : "text-muted-foreground hover:text-foreground"
+  }`;
+
+const publicLinks = [
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About us" },
+  { to: "/projects", label: "Projects" },
+  { to: "/contact", label: "Contact" },
+] as const;
+
+export function Layout({
+  children,
+  siteFooter,
+}: {
+  children: ReactNode;
+  siteFooter?: boolean;
+}) {
   const { user, role, signOut } = useAuth();
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const showSiteFooter = siteFooter ?? Boolean(user && (role === "student" || role === "business"));
+  const showMarketingInAppShell = Boolean(user && (role === "student" || role === "business"));
+  const useAppSidebar = Boolean(user && (role === "student" || role === "business"));
+  /** Guests + student/business (app + website sections) + admin (admin links only) */
+  const showMobileMenu = !user || showMarketingInAppShell || role === "admin";
 
   const navLinks =
     role === "admin"
@@ -32,37 +61,97 @@ export function Layout({ children }: { children: ReactNode }) {
           : [];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="container-page flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
+        <div className="container-page flex h-16 items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">C</span>
             </div>
             <span className="font-display font-bold text-lg tracking-tight">CampusLance</span>
           </Link>
 
-          {user && (
-            <nav className="hidden md:flex items-center gap-1">
+          {user && role === "admin" ? (
+            <nav className="hidden md:flex items-center gap-1 flex-1 justify-center" aria-label="Admin navigation">
               {navLinks.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className={({ isActive }) =>
-                    `px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                      isActive
-                        ? "text-foreground bg-secondary"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`
-                  }
-                >
+                <NavLink key={l.to} to={l.to} className={publicNavClass}>
+                  {l.label}
+                </NavLink>
+              ))}
+            </nav>
+          ) : (
+            <nav
+              className="hidden md:flex items-center gap-1 flex-1 justify-center"
+              aria-label="Website navigation"
+            >
+              {publicLinks.map((l) => (
+                <NavLink key={l.to} to={l.to} className={publicNavClass} end={l.to === "/"}>
                   {l.label}
                 </NavLink>
               ))}
             </nav>
           )}
 
-          <div className="flex items-center gap-2">
+          {showMobileMenu && (
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden shrink-0" aria-label="Open menu">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[min(100%,20rem)]">
+                <nav className="flex flex-col gap-1 mt-8">
+                  {user && role === "admin" && (
+                    <>
+                      <p className="px-3 text-xs font-medium text-muted-foreground uppercase tracking-wide">Admin</p>
+                      {navLinks.map((l) => (
+                        <NavLink
+                          key={l.to}
+                          to={l.to}
+                          className={publicNavClass}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {l.label}
+                        </NavLink>
+                      ))}
+                    </>
+                  )}
+                  {user && showMarketingInAppShell && (
+                    <>
+                      <p className="px-3 text-xs font-medium text-muted-foreground uppercase tracking-wide">App</p>
+                      {navLinks.map((l) => (
+                        <NavLink
+                          key={l.to}
+                          to={l.to}
+                          className={publicNavClass}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {l.label}
+                        </NavLink>
+                      ))}
+                      <p className="px-3 pt-4 text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        Website
+                      </p>
+                    </>
+                  )}
+                  {(!user || showMarketingInAppShell) &&
+                    publicLinks.map((l) => (
+                      <NavLink
+                        key={l.to}
+                        to={l.to}
+                        end={l.to === "/"}
+                        className={publicNavClass}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {l.label}
+                      </NavLink>
+                    ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          )}
+
+          <div className="flex items-center gap-2 shrink-0">
             {user ? (
               <>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/profile")}>
@@ -92,7 +181,14 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </header>
-      <main>{children}</main>
+
+      <div className="flex flex-1 flex-col min-h-0">
+        <div className="flex flex-1 min-w-0 min-h-0">
+          {useAppSidebar ? <AppSidebar links={navLinks} /> : null}
+          <main className="flex-1 min-w-0">{children}</main>
+        </div>
+        {showSiteFooter ? <SiteFooter /> : null}
+      </div>
     </div>
   );
 }

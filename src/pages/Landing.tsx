@@ -5,7 +5,7 @@ import { Briefcase, GraduationCap, Sparkles, ArrowRight } from "lucide-react";
 
 const Landing = () => {
   return (
-    <Layout>
+    <Layout siteFooter>
       <section className="container-page pt-20 pb-24">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground mb-6">
@@ -59,9 +59,6 @@ const Landing = () => {
         </div>
       </section>
 
-      <footer className="container-page py-10 text-sm text-muted-foreground">
-        © {new Date().getFullYear()} CampusLance
-      </footer>
     </Layout>
   );
 };
