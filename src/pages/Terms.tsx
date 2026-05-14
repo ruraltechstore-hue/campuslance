@@ -71,8 +71,8 @@ const Terms = () => {
             <h2 className="font-display text-lg font-semibold text-foreground">9. Contact</h2>
             <p>
               For questions about these terms:{" "}
-              <a href="mailto:support@campuslance.com" className="text-accent hover:underline">
-                support@campuslance.com
+              <a href="mailto:support@campuslance.in" className="text-accent hover:underline">
+                support@campuslance.in
               </a>
               . Related:{" "}
               <Link to="/privacy-policy" className="text-accent hover:underline">

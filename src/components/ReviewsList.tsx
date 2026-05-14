@@ -38,7 +38,7 @@ export function ReviewsList({ userId }: Props) {
           .select("id, name, company_name")
           .in("id", ids);
         const map: Record<string, string> = {};
-        (profs ?? []).forEach((p: any) => {
+        (profs ?? []).forEach((p: { id: string; company_name: string | null; name: string | null }) => {
           map[p.id] = p.company_name || p.name || "User";
         });
         setReviewerNames(map);

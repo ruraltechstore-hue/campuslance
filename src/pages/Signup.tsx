@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Layout } from "@/components/Layout";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { GraduationCap, Briefcase } from "lucide-react";
 import { PENDING_EMAIL_VERIFICATION_KEY } from "@/pages/CheckEmail";
@@ -27,6 +28,12 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (authLoading || !user?.email_confirmed_at) return;
+    navigate("/dashboard", { replace: true });
+  }, [authLoading, user, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,7 +48,7 @@ const Signup = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           role,
           name: role === "student" ? name : null,

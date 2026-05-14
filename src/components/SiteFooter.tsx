@@ -15,7 +15,7 @@ const legalLinks = [
   { to: "/cookies", label: "Cookies" },
 ] as const;
 
-const SUPPORT_EMAIL = "support@campuslance.com";
+const SUPPORT_EMAIL = "support@campuslance.in";
 const PHONE_DISPLAY = "+91 93901 68733";
 const PHONE_TEL = "+919390168733";
 const ADDRESS =

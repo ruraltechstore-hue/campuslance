@@ -42,7 +42,7 @@ const CheckEmail = () => {
     const { error } = await supabase.auth.resend({
       type: "signup",
       email,
-      options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     });
     setResending(false);
     if (error) {

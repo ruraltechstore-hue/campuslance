@@ -112,8 +112,8 @@ const CookiesPolicy = () => {
             <h2 className="font-display text-lg font-semibold text-foreground">Contact</h2>
             <p>
               Questions about this policy or our use of cookies:{" "}
-              <a href="mailto:support@campuslance.com" className="text-accent hover:underline">
-                support@campuslance.com
+              <a href="mailto:support@campuslance.in" className="text-accent hover:underline">
+                support@campuslance.in
               </a>
               . For broader privacy topics, see our{" "}
               <Link to="/privacy-policy" className="text-accent hover:underline">

@@ -148,8 +148,8 @@ export function SubmissionsPanel({
       resetForm();
       await load();
       onChanged?.();
-    } catch (err: any) {
-      toast.error(err.message || "Submission failed.");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Submission failed.");
     } finally {
       setSubmitting(false);
     }

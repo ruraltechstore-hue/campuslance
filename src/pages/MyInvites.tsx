@@ -39,7 +39,7 @@ const MyInvites = () => {
   async function load() {
     if (!user) return;
     setLoading(true);
-    const { data: inv } = await (supabase as any)
+    const { data: inv } = await supabase
       .from("invites")
       .select("*")
       .eq("student_id", user.id)
@@ -76,7 +76,7 @@ const MyInvites = () => {
   }, [user]);
 
   async function respond(id: string, status: "accepted" | "rejected") {
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("invites")
       .update({ status })
       .eq("id", id);

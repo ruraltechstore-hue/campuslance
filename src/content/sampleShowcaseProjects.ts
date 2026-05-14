@@ -138,6 +138,86 @@ export const SAMPLE_SHOWCASE_PROJECTS: SampleShowcaseProject[] = [
     ],
     idealFor: "Students in research, psychology, or PM-adjacent roles.",
   },
+  {
+    slug: "seo-blog-sprint",
+    title: "SEO blog sprint",
+    company: "Example: B2B analytics tool",
+    summary:
+      "Four long-form articles mapped to keywords and a reusable outline template—ideal for budding content strategists.",
+    duration: "2 weeks",
+    skills: "SEO, Copywriting",
+    imageSrc:
+      "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&h=600&fit=crop&q=80",
+    imageAlt: "Hands writing in a notebook next to laptop on a cafe table",
+    overview:
+      "The startup has a backlog of topics but inconsistent quality. You turn a keyword sheet into prioritized briefs, then draft polished posts with meta titles and internal link suggestions.",
+    deliverables: [
+      "Brief template the team can duplicate",
+      "4 x 900–1100-word drafts with headings and slug ideas",
+      "Light technical SEO checklist passed to whoever publishes",
+    ],
+    idealFor: "Marketing or journalism students experimenting with searchable content.",
+  },
+  {
+    slug: "email-nurture-drip",
+    title: "Email nurture sequence",
+    company: "Example: consumer savings app",
+    summary:
+      "Five-email welcome + education flow with subject-line variants and CTA tests—great for lifecycle copy practice.",
+    duration: "1–2 weeks",
+    skills: "Lifecycle copy, Figma / Notion",
+    imageSrc:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&h=600&fit=crop&q=80",
+    imageAlt: "Laptop on a desk with natural light, ready for focused writing and planning work",
+    overview:
+      "Product marketing has goals (activation, feature adoption) but no narrative arc. You map user moments, write copy in the brand voice, and annotate where experiments could run.",
+    deliverables: [
+      "User journey snippet with hypothesis per email",
+      "5 emails with alternate subject lines",
+      "Simple KPI table the growth team can track",
+    ],
+    idealFor: "Students interested in growth, CRM, or product marketing.",
+  },
+  {
+    slug: "llm-help-center-pass",
+    title: "Help center clarity pass",
+    company: "Example: SMB payroll platform",
+    summary:
+      "Rewrite ten help articles for plain-language + AI-assisted support—technical writing meets responsible AI framing.",
+    duration: "1–2 weeks",
+    skills: "Tech writing, Notion",
+    imageSrc:
+      "https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&h=600&fit=crop&q=80",
+    imageAlt: "Developers collaborating at workstations with multiple monitors",
+    overview:
+      "Support tickets cluster around onboarding taxes. You audit existing KB pages, shorten steps, define glossary terms, and flag where automation should escalate to humans.",
+    deliverables: [
+      "Annotated outline of duplicated content to merge",
+      "10 rewritten articles with FAQs",
+      "Escalation matrix for bots vs humans",
+    ],
+    idealFor: "Comms or CS majors plus technically curious writers.",
+  },
+  {
+    slug: "event-microsite-wireframe",
+    title: "Event microsite wireframe",
+    company: "Example: nonprofit climate summit",
+    summary:
+      "Low-fi wireframes for registration + agenda + sponsor strip—shows IA and prototyping without full visual design.",
+    duration: "1 week",
+    skills: "IA, Figma",
+    imageSrc:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=600&fit=crop&q=80",
+    imageAlt: "Conference audience seated in modern auditorium seating",
+    overview:
+      "Organizers need a single scroll experience that plugs into their ticketing vendor. You structure sections, annotate CTAs, and note accessibility checkpoints for captions and registrations.",
+    deliverables: [
+      "Sitemap plus mobile/desktop wireframes",
+      "Component checklist (hero, speaker grid, FAQs)",
+      "Accessibility notes referencing WCAG-friendly patterns",
+    ],
+    idealFor: "UX or aspiring web designers prototyping fast.",
+  },
 ];
 
 export function getSampleShowcaseBySlug(slug: string): SampleShowcaseProject | undefined {

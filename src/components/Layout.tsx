@@ -26,7 +26,7 @@ export function Layout({
   children: ReactNode;
   siteFooter?: boolean;
 }) {
-  const { user, role, signOut } = useAuth();
+  const { user, role, signOut, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -151,8 +151,13 @@ export function Layout({
             </Sheet>
           )}
 
-          <div className="flex items-center gap-2 shrink-0">
-            {user ? (
+          <div className="flex items-center gap-2 shrink-0 min-h-9">
+            {authLoading ? (
+              <div className="flex gap-2" aria-hidden>
+                <div className="h-8 w-16 rounded-md bg-muted animate-pulse" />
+                <div className="h-8 w-24 rounded-md bg-muted animate-pulse" />
+              </div>
+            ) : user ? (
               <>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/profile")}>
                   Profile

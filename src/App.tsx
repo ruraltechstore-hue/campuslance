@@ -32,6 +32,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import SampleProjectShowcase from "./pages/SampleProjectShowcase";
+import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/check-email" element={<CheckEmail />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/verify-otp" element={<Navigate to="/check-email" replace />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<MarketingProjects />} />

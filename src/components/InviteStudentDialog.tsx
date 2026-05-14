@@ -68,7 +68,7 @@ export function InviteStudentDialog({
       return;
     }
     setSubmitting(true);
-    const { error } = await (supabase as any).from("invites").insert({
+    const { error } = await supabase.from("invites").insert({
       project_id: projectId,
       business_id: user!.id,
       student_id: studentId,

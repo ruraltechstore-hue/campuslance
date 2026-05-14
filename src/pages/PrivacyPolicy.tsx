@@ -60,8 +60,8 @@ const PrivacyPolicy = () => {
             <h2 className="font-display text-lg font-semibold text-foreground">8. Contact</h2>
             <p>
               Questions about this policy:{" "}
-              <a href="mailto:support@campuslance.com" className="text-accent hover:underline">
-                support@campuslance.com
+              <a href="mailto:support@campuslance.in" className="text-accent hover:underline">
+                support@campuslance.in
               </a>
               . See also our{" "}
               <Link to="/cookies" className="text-accent hover:underline">

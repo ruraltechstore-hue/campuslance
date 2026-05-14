@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Layout } from "@/components/Layout";
+import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { PENDING_EMAIL_VERIFICATION_KEY } from "@/pages/CheckEmail";
 
@@ -13,6 +14,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (authLoading || !user?.email_confirmed_at) return;
+    navigate("/dashboard", { replace: true });
+  }, [authLoading, user, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
