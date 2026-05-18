@@ -141,14 +141,14 @@ const NewProject = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="budget">Budget (USD)</Label>
+              <Label htmlFor="budget">Budget (INR)</Label>
               <Input
                 id="budget"
                 type="number"
                 min={1}
                 value={budget}
                 onChange={(e) => setBudget(e.target.value)}
-                placeholder="500"
+                placeholder="25000"
                 required
               />
             </div>

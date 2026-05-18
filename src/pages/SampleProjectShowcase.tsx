@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { getSampleShowcaseBySlug } from "@/content/sampleShowcaseProjects";
 
 const SampleProjectShowcase = () => {
@@ -57,17 +57,6 @@ const SampleProjectShowcase = () => {
             <h2 className="font-display text-lg font-semibold text-foreground mb-3">Ideal for</h2>
             <p>{project.idealFor}</p>
           </section>
-        </div>
-
-        <div className="mt-10 pt-8 border-t border-border flex flex-wrap gap-3">
-          <Button asChild size="lg">
-            <Link to="/signup?role=student">
-              Apply on CampusLance <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link to="/signup?role=business">Post a real project</Link>
-          </Button>
         </div>
       </article>
     </Layout>

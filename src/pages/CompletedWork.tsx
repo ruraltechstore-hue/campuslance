@@ -7,7 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StarRating } from "@/components/StarRating";
 import { LeaveReviewDialog } from "@/components/LeaveReviewDialog";
-import { FileText, DollarSign, CheckCircle2 } from "lucide-react";
+import { FileText, IndianRupee, CheckCircle2 } from "lucide-react";
+import { formatProjectBudget } from "@/lib/formatCurrency";
 import { format } from "date-fns";
 
 type Project = {
@@ -158,8 +159,8 @@ const CompletedWork = () => {
                     <div className="flex items-center gap-3">
                       <Badge>Completed</Badge>
                       <span className="text-sm font-semibold text-accent inline-flex items-center">
-                        <DollarSign className="h-3.5 w-3.5" />
-                        {Number(p.budget).toLocaleString()}
+                        <IndianRupee className="h-3.5 w-3.5" />
+                        {formatProjectBudget(Number(p.budget))}
                       </span>
                     </div>
                   </div>

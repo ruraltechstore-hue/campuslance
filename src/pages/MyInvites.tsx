@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { format } from "date-fns";
-import { DollarSign } from "lucide-react";
+import { IndianRupee } from "lucide-react";
+import { formatProjectBudget } from "@/lib/formatCurrency";
 
 type Invite = {
   id: string;
@@ -144,8 +145,8 @@ const MyInvites = () => {
                       </Badge>
                       {proj && (
                         <span className="text-sm font-semibold text-accent inline-flex items-center">
-                          <DollarSign className="h-3.5 w-3.5" />
-                          {Number(proj.budget).toLocaleString()}
+                          <IndianRupee className="h-3.5 w-3.5" />
+                          {formatProjectBudget(Number(proj.budget))}
                         </span>
                       )}
                     </div>

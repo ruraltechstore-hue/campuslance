@@ -60,16 +60,31 @@ export function Layout({
             ]
           : [];
 
+  const brandMark = (
+    <>
+      <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center">
+        <span className="text-primary-foreground font-bold text-sm">C</span>
+      </div>
+      <span className="font-display font-bold text-lg tracking-tight">CampusLance</span>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
         <div className="container-page flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">C</span>
+          {user ? (
+            <div
+              className="flex items-center gap-2 shrink-0 cursor-default"
+              aria-label="CampusLance"
+            >
+              {brandMark}
             </div>
-            <span className="font-display font-bold text-lg tracking-tight">CampusLance</span>
-          </Link>
+          ) : (
+            <Link to="/" className="flex items-center gap-2 shrink-0">
+              {brandMark}
+            </Link>
+          )}
 
           {user && role === "admin" ? (
             <nav className="hidden md:flex items-center gap-1 flex-1 justify-center" aria-label="Admin navigation">

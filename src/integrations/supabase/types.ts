@@ -413,6 +413,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_recent_sign_ins: {
+        Args: { p_limit?: number }
+        Returns: {
+          user_id: string
+          email: string
+          last_sign_in_at: string
+        }[]
+      }
       business_verification_is_approved: {
         Args: { _user_id: string }
         Returns: boolean

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Briefcase,
   GraduationCap,
@@ -56,6 +57,8 @@ const WHY_ROWS = [
 ] as const;
 
 const Landing = () => {
+  const { user } = useAuth();
+
   return (
     <Layout siteFooter>
       <section className="container-page pt-16 pb-20 lg:pt-20 lg:pb-24">
@@ -75,16 +78,18 @@ const Landing = () => {
               titles. Whether you are prototyping a brand touchpoint or shipping a research synthesis, you collaborate in
               defined milestones with visibility for both sides.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="h-12 px-6">
-                <Link to="/signup?role=student">
-                  I'm a student <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="h-12 px-6">
-                <Link to="/signup?role=business">I'm hiring</Link>
-              </Button>
-            </div>
+            {!user && (
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="h-12 px-6">
+                  <Link to="/signup?role=student">
+                    I'm a student <ArrowRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="h-12 px-6">
+                  <Link to="/signup?role=business">I'm hiring</Link>
+                </Button>
+              </div>
+            )}
             <div className="mt-10 flex flex-wrap gap-2">
               {VALUE_CHIPS.map(({ label, icon: ChipIcon }) => (
                 <span

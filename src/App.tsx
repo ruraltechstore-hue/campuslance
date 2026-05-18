@@ -70,7 +70,7 @@ const App = () => (
             <Route
               path="/projects/new"
               element={
-                <ProtectedRoute requiredRole="business" requireVerifiedBusiness>
+                <ProtectedRoute requiredRole="business">
                   <NewProject />
                 </ProtectedRoute>
               }

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Users, Users2 } from "lucide-react";
+import { formatProjectBudget } from "@/lib/formatCurrency";
 
 type Project = {
   id: string;
@@ -66,9 +67,10 @@ const BusinessDashboard = () => {
       <div className="container-page py-10">
         {kycApproved === false && (
           <Card className="mb-6 border-amber-500/40 bg-amber-500/5 p-4">
-            <p className="font-medium text-sm mb-1">Business verification required</p>
+            <p className="font-medium text-sm mb-1">Get verified</p>
             <p className="text-sm text-muted-foreground mb-3">
-              Complete verification so you can post projects. Your existing account stays active.
+              Complete verification to earn a verified company badge on your profile and build trust with
+              students. Your existing account stays active.
             </p>
             <Button size="sm" asChild>
               <Link to="/business/verification">Start verification</Link>
@@ -89,23 +91,11 @@ const BusinessDashboard = () => {
                 <Users2 className="h-4 w-4 mr-1" /> Worked students
               </Link>
             </Button>
-            {kycApproved === true ? (
-              <Button asChild>
-                <Link to="/projects/new">
-                  <Plus className="h-4 w-4 mr-1" /> New project
-                </Link>
-              </Button>
-            ) : kycApproved === false ? (
-              <Button variant="outline" asChild>
-                <Link to="/business/verification">
-                  <Plus className="h-4 w-4 mr-1" /> Verify to post
-                </Link>
-              </Button>
-            ) : (
-              <Button disabled>
-                <Plus className="h-4 w-4 mr-1" /> New project
-              </Button>
-            )}
+            <Button asChild>
+              <Link to="/projects/new">
+                <Plus className="h-4 w-4 mr-1" /> Post Project
+              </Link>
+            </Button>
           </div>
         </div>
 
@@ -114,15 +104,9 @@ const BusinessDashboard = () => {
         ) : projects.length === 0 ? (
           <Card className="p-12 text-center">
             <p className="text-muted-foreground mb-4">No projects yet.</p>
-            {kycApproved === true ? (
-              <Button asChild>
-                <Link to="/projects/new">Post your first project</Link>
-              </Button>
-            ) : (
-              <Button asChild variant="secondary">
-                <Link to="/business/verification">Verify to post projects</Link>
-              </Button>
-            )}
+            <Button asChild>
+              <Link to="/projects/new">Post Project</Link>
+            </Button>
           </Card>
         ) : (
           <div className="grid gap-4">
@@ -146,7 +130,7 @@ const BusinessDashboard = () => {
                 </div>
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
                   <span className="text-sm font-semibold text-accent">
-                    ${Number(p.budget).toLocaleString()}
+                    {formatProjectBudget(Number(p.budget))}
                   </span>
                   <Button variant="outline" size="sm" asChild>
                     <Link to={`/projects/${p.id}`}>

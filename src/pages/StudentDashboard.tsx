@@ -5,7 +5,8 @@ import { Layout } from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Search, DollarSign, Calendar } from "lucide-react";
+import { Search, IndianRupee, Calendar } from "lucide-react";
+import { formatProjectBudget } from "@/lib/formatCurrency";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { SAMPLE_SHOWCASE_PROJECTS } from "@/content/sampleShowcaseProjects";
@@ -161,8 +162,8 @@ const StudentDashboard = () => {
                       </p>
                     </div>
                     <div className="flex items-center gap-1.5 text-accent font-semibold whitespace-nowrap">
-                      <DollarSign className="h-4 w-4" />
-                      {Number(p.budget).toLocaleString()}
+                      <IndianRupee className="h-4 w-4" />
+                      {formatProjectBudget(Number(p.budget))}
                     </div>
                   </div>
                   <p className="text-sm text-foreground/80 line-clamp-2 mb-4">{p.description}</p>

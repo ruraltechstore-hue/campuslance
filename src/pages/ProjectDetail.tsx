@@ -20,7 +20,8 @@ import { LeaveReviewDialog } from "@/components/LeaveReviewDialog";
 import { StarRating } from "@/components/StarRating";
 import { SubmissionsPanel } from "@/components/SubmissionsPanel";
 import { toast } from "sonner";
-import { DollarSign, Calendar, Building2, ArrowLeft, FileText, CheckCircle2 } from "lucide-react";
+import { IndianRupee, Calendar, Building2, ArrowLeft, FileText, CheckCircle2 } from "lucide-react";
+import { formatProjectBudget } from "@/lib/formatCurrency";
 import { format } from "date-fns";
 
 type Project = {
@@ -243,8 +244,8 @@ const ProjectDetail = () => {
             <div className="text-right">
               <div className="text-xs text-muted-foreground uppercase tracking-wide">Budget</div>
               <div className="flex items-center gap-1 text-2xl font-bold text-accent">
-                <DollarSign className="h-5 w-5" />
-                {Number(project.budget).toLocaleString()}
+                <IndianRupee className="h-5 w-5" />
+                {formatProjectBudget(Number(project.budget))}
               </div>
               {project.deadline && (
                 <div className="text-xs text-muted-foreground mt-1 inline-flex items-center gap-1">

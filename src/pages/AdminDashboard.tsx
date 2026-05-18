@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { AdminActivityMonitor } from "@/components/AdminActivityMonitor";
 
 const AdminDashboard = () => {
   const [pending, setPending] = useState<number | null>(null);
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
 
   return (
     <Layout>
-      <div className="container-page py-10 max-w-3xl">
+      <div className="container-page py-10 max-w-5xl">
         <h1 className="font-display text-3xl font-bold mb-2">Admin</h1>
         <p className="text-muted-foreground mb-8">Business verification and platform oversight.</p>
 
@@ -56,6 +57,8 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
         </div>
+
+        <AdminActivityMonitor />
       </div>
     </Layout>
   );

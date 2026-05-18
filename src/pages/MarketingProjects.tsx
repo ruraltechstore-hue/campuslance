@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { useAuth } from "@/hooks/useAuth";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,6 +67,8 @@ const PROJECT_TYPES = [
 ] as const;
 
 const MarketingProjects = () => {
+  const { user } = useAuth();
+
   return (
     <Layout siteFooter>
       <section className="container-page pt-20 pb-12 max-w-3xl">
@@ -188,16 +191,18 @@ const MarketingProjects = () => {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-wrap gap-3 justify-center">
-          <Button asChild size="lg">
-            <Link to="/signup?role=student">
-              I&apos;m a student <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link to="/signup?role=business">I&apos;m hiring</Link>
-          </Button>
-        </div>
+        {!user && (
+          <div className="mt-14 flex flex-wrap gap-3 justify-center">
+            <Button asChild size="lg">
+              <Link to="/signup?role=student">
+                I&apos;m a student <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link to="/signup?role=business">I&apos;m hiring</Link>
+            </Button>
+          </div>
+        )}
       </section>
     </Layout>
   );
